@@ -2,3 +2,5 @@ numpy
 matplotlib
 tensorflow
 keras
+scikit-learn
+numba
