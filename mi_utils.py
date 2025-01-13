@@ -75,12 +75,12 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
     cmap_layer = plt.get_cmap('Greys')
     clayer = [cmap_layer(i) for i in np.linspace(0, 1, max_index)]
 
-    for i in range (0 , max_index):
-        I_XT = i_xt[i, :]
-        I_TY = i_ty[i, :]
+    for i in range(0, max_index):
+        IXT = i_xt[i, :]
+        ITY = i_ty[i, :]
 
-        plt.plot(I_XT, I_TY, color = clayer[i], linestyle = None, linewidth = 2, label = 'Layer {}'.format(str(i)))
-        plt.scatter(I_XT, I_TY, marker='o', c = colors, s = 200, alpha = 1)#,zorder=10)
+        plt.plot(IXT,ITY,color=clayer[i],linestyle=None,linewidth=2,label='Layer {}'.format(str(i)))
+        plt.scatter(IXT,ITY,marker='o',c=colors,s=200,alpha=1)
 
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=0, vmax=1))
     fig, ax = plt.gcf(), plt.gca()  # Obtém a figura e o eixo atual

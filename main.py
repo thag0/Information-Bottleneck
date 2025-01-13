@@ -62,10 +62,10 @@ if __name__ == '__main__':
         epochs = NUM_EPOCAS,
         batch_size = TAM_LOTE,
         callbacks = [act_callback],
-        verbose = 0
+        verbose = 2
     )
 
-    loss, acc = modelo.evaluate(X_test, Y_test)
+    loss, acc = modelo.evaluate(X_test, Y_test, verbose=0)
     print('Perda: ', loss, '\nAcurácia: ', acc)
     
     act_list = discretization(act_list, NUM_BINS, NUM_LAYERS, NUM_EPOCAS)
