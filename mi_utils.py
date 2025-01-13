@@ -1,6 +1,5 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from numba import njit
 
 def entropy(y: np.ndarray):
     unique, count = np.unique(y, return_counts=True, axis=0)
@@ -54,8 +53,9 @@ def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: 
 
     for layer in range (0, num_layers):
         for epoch in range (0, epochs):
-            i_xt[layer, epoch] = mutual_information(act_list[epoch][layer][0], x)
-            i_ty[layer, epoch] = mutual_information(act_list[epoch][layer][0], y)
+            acts = act_list[epoch][layer][0]
+            i_xt[layer, epoch] = mutual_information(acts, x)
+            i_ty[layer, epoch] = mutual_information(acts, y)
 
     return i_xt, i_ty
 
