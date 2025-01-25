@@ -31,7 +31,7 @@ if __name__ == '__main__':
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: save_activations(modelo))
     
-    print('treinado')
+    print('treinando')
     result = modelo.fit(
         x = X_train,
         y = Y_train,

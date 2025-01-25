@@ -20,7 +20,7 @@ def model(input_shape: tuple) -> Sequential:
     ])
 
     model.compile(
-        optimizer = SGD(0.00001, 0.995),
+        optimizer = SGD(0.00001, 0.99),
         loss = "mse",
         metrics = ['accuracy']
     )
