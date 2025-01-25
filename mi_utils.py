@@ -1,14 +1,14 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def entropy(y: np.ndarray):
+def entropy(y: np.ndarray) -> float:
     unique, count = np.unique(y, return_counts=True, axis=0)
     prob = count / len(y)
     en = np.sum((-1)*prob*np.log2(prob))
-    
+
     return en
 
-def joint_entropy(y: np.ndarray, x: np.ndarray):
+def joint_entropy(y: np.ndarray, x: np.ndarray) -> float:
     if x.shape[0] != y.shape[0]:
         min_size = min(x.shape[0], y.shape[0])
         x = x[:min_size]
@@ -18,44 +18,36 @@ def joint_entropy(y: np.ndarray, x: np.ndarray):
 
     return entropy(yx)
 
-def conditional_entropy(y: np.ndarray, x: np.ndarray):
+def conditional_entropy(y: np.ndarray, x: np.ndarray) -> float:
     return joint_entropy(y, x) - entropy(x)
 
-def mutual_information(y, x):
+def mutual_information(y: np.ndarray, x: np.ndarray) -> float:
     return entropy(y) - conditional_entropy(y, x)
 
-def discretization(act_list: list, bins: int, num_layers: int, epochs: int):
-    print('discretizando')
+def discretization(act_list: list, num_bins: int):
+    print("Discretizando ativações...")
 
-    n_bins = bins
+    discretized = []
+    for epoch_acts in act_list:
+        epoch_discretized = []
+        for layer_acts in epoch_acts:
+            layer_acts = np.ravel(layer_acts)
+            bins_edges = np.linspace(np.min(layer_acts), np.max(layer_acts), num_bins + 1)
+            epoch_discretized.append(np.digitize(layer_acts, bins_edges))
+        discretized.append(epoch_discretized)
 
-    for layer in range(num_layers):
-        for epoch in range(epochs):
-            activations = act_list[epoch][layer][0]
-            
-            activations = np.ravel(activations)
+    return discretized
 
-            bins_edges = np.linspace(
-                np.min(activations),
-                np.max(activations),
-                n_bins + 1
-            )
-
-            act_list[epoch][layer][0] = np.digitize(activations, bins_edges)
-
-    return act_list
-
-def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int) -> tuple[np.ndarray, np.ndarray]:
-    print('Gerando plano da informação')
+def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int):
+    print("Calculando plano da informação")
 
     i_xt = np.zeros((num_layers, epochs))
     i_ty = np.zeros((num_layers, epochs))
 
-    for layer in range (0, num_layers):
-        for epoch in range (0, epochs):
-            acts = act_list[epoch][layer][0]
-            i_xt[layer, epoch] = mutual_information(acts, x)
-            i_ty[layer, epoch] = mutual_information(acts, y)
+    for epoch in range(epochs):
+        for layer in range(num_layers):
+            i_xt[layer, epoch] = mutual_information(act_list[epoch][layer], x)
+            i_ty[layer, epoch] = mutual_information(act_list[epoch][layer], y)
 
     return i_xt, i_ty
 
@@ -79,7 +71,7 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
         IXT = i_xt[i, :]
         ITY = i_ty[i, :]
 
-        plt.plot(IXT,ITY,color=clayer[i],linestyle=None,linewidth=2,label='Layer {}'.format(str(i)))
+        plt.plot(IXT,ITY,color=clayer[i],linestyle=None,linewidth=2,label='Camada {}'.format(str(i+1)))
         plt.scatter(IXT,ITY,marker='o',c=colors,s=200,alpha=1)
 
     sm = plt.cm.ScalarMappable(cmap=cmap, norm=plt.Normalize(vmin=0, vmax=1))
@@ -89,7 +81,7 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
     cbar.ax.text(0.5, -0.01, 0, transform=cbar.ax.transAxes, va='top', ha='center')
     cbar.ax.text(0.5, 1.0, str(epochs), transform=cbar.ax.transAxes, va='bottom', ha='center')
 
-    plt.axhline(y = float(i_xy), color = 'red', linestyle = ':', label = r'$I[X,Y]$')
-    
+    # plt.axhline(y = float(i_xy), color = 'red', linestyle = ':', label = r'$I[X,Y]$')
+
     plt.legend()
     plt.show()
