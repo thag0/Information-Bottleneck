@@ -24,18 +24,19 @@ def conditional_entropy(y: np.ndarray, x: np.ndarray) -> float:
 def mutual_information(y: np.ndarray, x: np.ndarray) -> float:
     return entropy(y) - conditional_entropy(y, x)
 
-def discretization(act_list: list, num_bins: int):
-    print("Discretizando ativações...")
-
+def discretization(act_list, num_bins = 30) -> list:
     discretized = []
+
     for epoch_acts in act_list:
         epoch_discretized = []
+    
         for layer_acts in epoch_acts:
-            layer_acts = np.ravel(layer_acts)
-            bins_edges = np.linspace(np.min(layer_acts), np.max(layer_acts), num_bins + 1)
+            layer_acts = np.arctan(layer_acts)  # Aplicando a transformação arctan
+            bins_edges = np.linspace(-1, 1, num_bins + 1)
             epoch_discretized.append(np.digitize(layer_acts, bins_edges))
+    
         discretized.append(epoch_discretized)
-
+    
     return discretized
 
 def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int):
@@ -46,8 +47,9 @@ def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: 
 
     for epoch in range(epochs):
         for layer in range(num_layers):
-            i_xt[layer, epoch] = mutual_information(act_list[epoch][layer], x)
-            i_ty[layer, epoch] = mutual_information(act_list[epoch][layer], y)
+            act = act_list[epoch][layer]
+            i_xt[layer, epoch] = mutual_information(act, x)
+            i_ty[layer, epoch] = mutual_information(act, y)
 
     return i_xt, i_ty
 

@@ -25,39 +25,17 @@ def gen_data(tam_teste: float, flat_input: bool, normalize: bool) -> tuple[np.nd
 
     return (input_shape, X_train, X_test, y_train, y_test)
 
-def gen_tishby_data(num_samples: int, tam_teste: float) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    """
-    Gera os dados sintéticos baseados no estudo de Tishby.
-    
-    Parâmetros:
-        num_samples (int): Número total de amostras a serem geradas.
-        tam_teste (float): Proporção do conjunto de testes.
+def generate_data(input_len = 12, samples = 4096):
+    np.random.seed(42)
+    X = np.random.choice([0, 1], size = (samples, input_len))
 
-    Retorna:
-        tuple: (input_shape, X_train, X_test, y_train, y_test)
-    """
-    # Gerar 12 entradas binárias representando pontos em uma esfera 2D
-    X = np.random.randint(0, 2, size=(num_samples, 12))
+    f_x = np.sum(X, axis = 1)
+    theta = np.median(f_x)
 
-    # Aplicar uma função de combinação esférica (harmônicas esféricas)
-    weights = np.random.randn(12)  # Pesos aleatórios para simular a função f(x)
-    f_x = np.dot(X, weights)  # Simula a projeção sobre a esfera
+    gamma = 10
+    P_Y_given_X = 1 / (1 + np.exp(-gamma * (f_x - theta)))
+    Y = np.random.binomial(1, P_Y_given_X)
 
-    # Aplicar uma função sigmoidal para gerar rótulos probabilísticos
-    theta = np.median(f_x)  # Definir o limiar de decisão
-    gamma = 10  # Parâmetro de inclinação da sigmoide
-    probs = 1 / (1 + np.exp(-gamma * (f_x - theta)))  # Probabilidades da sigmoide
-    y = (probs > 0.5).astype(int)  # Binarizar a saída
+    input_shape = (input_len,)
 
-    # Normalizar as entradas para o intervalo [0,1]
-    X = X.astype('float32')
-
-    # Codificar as saídas em one-hot encoding
-    y = to_categorical(y, num_classes=2)
-
-    # Dividir os dados em conjuntos de treinamento e teste
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=tam_teste, random_state=42)
-
-    input_shape = (12,)
-
-    return input_shape, X_train, X_test, y_train, y_test
+    return input_shape, X.astype(np.float32), Y.astype(np.float32)

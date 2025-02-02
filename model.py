@@ -9,22 +9,23 @@ from keras.api.layers import Dense, Input
 #   - Unidades: 12 - 10 - 8 - 6 - 4 - 2
 #   - Dataset
 
-
 def model(input_shape: tuple) -> Sequential:
+
     model =  Sequential([
-        Input(shape = input_shape),
+        Input(input_shape),
         Dense(10, activation = "tanh"),
         Dense( 7, activation = "tanh"),
         Dense( 5, activation = "tanh"),
         Dense( 4, activation = "tanh"),
         Dense( 3, activation = "tanh"),
-        Dense( 2, activation = "sigmoid"),
+        Dense( 2, activation = "tanh"),
+        Dense( 1, activation = "sigmoid"),
     ])
 
     model.compile(
-        optimizer = SGD(0.000001, 0.999),
+        optimizer = SGD(0.0001, 0.95),
         loss = "binary_crossentropy",
-        metrics = ['accuracy'],
+        metrics = ['accuracy']
     )
 
     return model
