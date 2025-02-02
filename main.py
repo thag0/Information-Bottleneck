@@ -3,6 +3,7 @@ from data import *
 from magic_numbers import MagicNumbers
 from model import model
 
+import keras
 from keras.api.callbacks import LambdaCallback
 from keras.api.models import Sequential
 import tensorflow as tf
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     mn = MagicNumbers()
 
     # input_shape, X_train, X_test, Y_train, Y_test = gen_data(mn.tam_teste, mn.flat_input, mn.normalize_dataset_out)
-    input_shape, X_train, Y_train = generate_data(12, (1024 * 10))
+    input_shape, X_train, Y_train = generate_data(12, (1024 * 4))
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
