@@ -53,7 +53,7 @@ def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: 
 
     return i_xt, i_ty
 
-def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy: np.ndarray):
+def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy: float):
     print('Gerando gráfico')
 
     assert len(i_xt) == len(i_ty)
@@ -83,7 +83,8 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
     cbar.ax.text(0.5, -0.01, 0, transform=cbar.ax.transAxes, va='top', ha='center')
     cbar.ax.text(0.5, 1.0, str(epochs), transform=cbar.ax.transAxes, va='bottom', ha='center')
 
-    # plt.axhline(y = float(i_xy), color = 'red', linestyle = ':', label = r'$I[X,Y]$')
+    plt.axhline(y = i_xy, color = 'red', linestyle = ':', label = r'$I[X,Y]$')
 
+    plt.title("Information Plane")
     plt.legend()
     plt.show()

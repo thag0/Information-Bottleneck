@@ -23,7 +23,7 @@ def model(input_shape: tuple) -> Sequential:
     ])
 
     model.compile(
-        optimizer = SGD(0.0001, 0.95),
+        optimizer = SGD(0.00001, 0.996),
         loss = "binary_crossentropy",
         metrics = ['accuracy']
     )
