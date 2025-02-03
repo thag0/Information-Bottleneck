@@ -45,12 +45,12 @@ if __name__ == '__main__':
 
     # Imprimir avanço do treinamento
     act_callback = LambdaCallback(
-    on_epoch_end=lambda epoch, logs: [
-        save_activations(modelo),
-        sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),
-        sys.stdout.flush()
-    ]
-)
+        on_epoch_end=lambda epoch, logs: [
+            save_activations(modelo),
+            sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),
+            sys.stdout.flush()
+        ]
+    )
     
     print('Treinando')
     result = modelo.fit(
