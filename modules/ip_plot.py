@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy: float):
+def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epochs: int):
     print('Gerando gráfico')
 
     assert len(i_xt) == len(i_ty)
@@ -14,8 +14,6 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
 
     cmap = plt.get_cmap('gnuplot')
     colors = [cmap(i) for i in np.linspace(0, 1, epochs)]
-    cmap_layer = plt.get_cmap('Greys')
-    clayer = [cmap_layer(i) for i in np.linspace(0, 1, num_layers)]
 
     # Conectar camadas 
     for epoch in range(epochs):
@@ -23,7 +21,7 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
             plt.plot(
                 [i_xt[layer, epoch], i_xt[layer + 1, epoch]],  
                 [i_ty[layer, epoch], i_ty[layer + 1, epoch]],  
-                color=colors[epoch], linestyle = '-', linewidth = 0.8, alpha = 0.3
+                color = colors[epoch], linestyle = '-', linewidth = 0.8, alpha = 0.5
             )
 
     for i in range(num_layers):
@@ -47,7 +45,7 @@ def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, epochs: int, i_xy
     cbar.ax.text(0.5, -0.01, 0, transform = cbar.ax.transAxes, va = 'top', ha = 'center')
     cbar.ax.text(0.5, 1.0, str(epochs), transform = cbar.ax.transAxes, va = 'bottom', ha = 'center')
 
-    plt.axhline(y = i_xy, color = 'red', linestyle = ':', label = r'$I[X,Y]$')
+    plt.axhline(y = i_xy, color = 'red', linestyle = ':', label = r'$I[X,Y]$') # Informação Mútua da entrada e saída
 
     plt.title("Information Plane")
     plt.legend()

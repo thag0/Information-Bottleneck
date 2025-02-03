@@ -1,5 +1,5 @@
 magic_numbers = {
-    'epochs': 600,
+    'epochs': 300,
     'tam_teste': 0.15,
     'tam_lote': 64,
     'num_bins': 30,

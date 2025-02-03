@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
 
 def entropy(y: np.ndarray) -> float:
     unique, count = np.unique(y, return_counts=True, axis=0)
@@ -24,7 +25,7 @@ def conditional_entropy(y: np.ndarray, x: np.ndarray) -> float:
 def mutual_information(y: np.ndarray, x: np.ndarray) -> float:
     return entropy(y) - conditional_entropy(y, x)
 
-def discretization(act_list, num_bins = 30) -> list:
+def discretization(act_list: list[list], num_bins = 30) -> list[list]:
     discretized = []
 
     for epoch_acts in act_list:
@@ -39,17 +40,23 @@ def discretization(act_list, num_bins = 30) -> list:
     
     return discretized
 
-def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int):
-    print("Calculando plano da informação")
+def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int, logs: bool = True) -> tuple[np.ndarray, np.ndarray]:
+    if logs: print("\nCalculando plano da informação")
 
     i_xt = np.zeros((num_layers, epochs))
     i_ty = np.zeros((num_layers, epochs))
 
     for epoch in range(epochs):
+        if logs:
+            sys.stdout.write(f"\rÉpoca {epoch + 1}/{epochs}")  # Avanço da transformação
+            sys.stdout.flush()
+
         for layer in range(num_layers):
             act = act_list[epoch][layer]
             i_xt[layer, epoch] = mutual_information(act, x)
             i_ty[layer, epoch] = mutual_information(act, y)
+
+    if logs: print()  # Retomar na linha de baixo
 
     return i_xt, i_ty
 

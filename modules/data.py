@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 from keras.api.datasets import mnist
 from keras.api.utils import to_categorical
 
-def gen_data(tam_teste: float, flat_input: bool, normalize: bool) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def gen_data(tam_teste: float, flat_input: bool, normalize: bool) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
     if normalize:

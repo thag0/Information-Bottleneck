@@ -8,6 +8,7 @@ from keras.api.callbacks import LambdaCallback
 from keras.api.models import Sequential
 import tensorflow as tf
 import os
+import sys
 
 # desativar avisos
 import warnings
@@ -18,9 +19,9 @@ def save_activations(model: Sequential):
     global act_list
     
     outputs = [layer.output for layer in model.layers]
-    activation_model = tf.keras.Model(inputs=model.inputs, outputs=outputs)
+    act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
 
-    activations = activation_model.predict(X_train, batch_size=mn.tam_lote, verbose=0)
+    activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
     act_list.append(activations)
 
 def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarray:
@@ -41,9 +42,17 @@ if __name__ == '__main__':
     print('Y: ', Y_train.shape)
 
     modelo = model(input_shape)
-    act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: save_activations(modelo))
+
+    # Imprimir avanço do treinamento
+    act_callback = LambdaCallback(
+    on_epoch_end=lambda epoch, logs: [
+        save_activations(modelo),
+        sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),
+        sys.stdout.flush()
+    ]
+)
     
-    print('treinando')
+    print('Treinando')
     result = modelo.fit(
         x = X_train,
         y = Y_train,
@@ -54,11 +63,11 @@ if __name__ == '__main__':
     )
 
     loss, acc = modelo.evaluate(X_train, Y_train, verbose = 0)
-    print('Perda: ', loss, '\nAcurácia: ', acc)
+    print('\n \nPerda: ', loss, '\nAcurácia: ', acc)
 
     act_list_2 = discretization(act_list, mn['num_bins'])
 
-    i_xy = mutual_information(X_train, Y_train)
-    i_xt, i_ty = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
+    I_XY = mutual_information(X_train, Y_train)
+    I_XT, I_TY = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
 
-    plot_information_plane(i_xt, i_ty, mn['epochs'], i_xy)
+    plot_information_plane(I_XT, I_TY, I_XY, mn['epochs'])

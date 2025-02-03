@@ -9,7 +9,7 @@ from keras.api.layers import Dense, Input
 #   - Unidades: 12 - 10 - 8 - 6 - 4 - 2
 #   - Dataset sintetico
 
-def model(input_shape: tuple) -> Sequential:
+def model(input_shape: tuple[int]) -> Sequential:
 
     model =  Sequential([
         Input(input_shape),
