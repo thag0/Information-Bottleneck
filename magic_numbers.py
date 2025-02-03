@@ -1,8 +1,12 @@
-class MagicNumbers():
-    def __init__(self):
-        self.epochs = 600 #400
-        self.tam_teste = 0.15
-        self.tam_lote = 64
-        self.num_bins = 30
-        self.flat_input = True
-        self.normalize_dataset_out = False
+magic_numbers = {
+    'epochs': 600,
+    'tam_teste': 0.15,
+    'tam_lote': 64,
+    'num_bins': 30,
+    'flat_mnist_input': True,
+    'normalize_dataset_out': False,
+    'tishby_dataset_len': 1024 * 4
+}
+
+if __name__ == '__main__':
+    print('magic_numbers.py é um módulo e não deve ser executado diretamente')

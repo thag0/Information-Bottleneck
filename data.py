@@ -25,7 +25,10 @@ def gen_data(tam_teste: float, flat_input: bool, normalize: bool) -> tuple[np.nd
 
     return (input_shape, X_train, X_test, y_train, y_test)
 
-def generate_data(input_len = 12, samples = 4096):
+def generate_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
+    '''
+        Dataset do artigo de Tishby
+    '''
     np.random.seed(42)
     X = np.random.choice([0, 1], size = (samples, input_len))
 
@@ -39,3 +42,6 @@ def generate_data(input_len = 12, samples = 4096):
     input_shape = (input_len,)
 
     return input_shape, X.astype(np.float32), Y.astype(np.float32)
+
+if __name__ == '__main__':
+    print('data.py é um módulo e não deve ser executado diretamente')

@@ -1,7 +1,8 @@
 from mi_utils import *
 from data import *
-from magic_numbers import MagicNumbers
+from magic_numbers import magic_numbers as mn
 from model import model
+from ip_plot import plot_information_plane
 
 import keras
 from keras.api.callbacks import LambdaCallback
@@ -11,7 +12,7 @@ import os
 
 # desativar avisos
 import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category = UserWarning)
 tf.get_logger().setLevel('ERROR')
 
 def save_activations(model: Sequential):
@@ -34,10 +35,8 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
     
-    mn = MagicNumbers()
-
-    # input_shape, X_train, X_test, Y_train, Y_test = gen_data(mn.tam_teste, mn.flat_input, mn.normalize_dataset_out)
-    input_shape, X_train, Y_train = generate_data(12, (1024 * 4))
+    # input_shape, X_train, X_test, Y_train, Y_test = gen_data(mn['flat_mnist_input'], mn.flat_input, mn.normalize_dataset_out)
+    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
@@ -49,8 +48,8 @@ if __name__ == '__main__':
     result = modelo.fit(
         x = X_train,
         y = Y_train,
-        epochs = mn.epochs,
-        batch_size = mn.tam_lote,
+        epochs = mn['epochs'],
+        batch_size = mn['tam_lote'],
         callbacks = [act_callback],
         verbose = 0,
     )
@@ -58,9 +57,9 @@ if __name__ == '__main__':
     loss, acc = modelo.evaluate(X_train, Y_train, verbose = 0)
     print('Perda: ', loss, '\nAcurácia: ', acc)
 
-    act_list_2 = discretization(act_list, mn.num_bins)
+    act_list_2 = discretization(act_list, mn['num_bins'])
 
     i_xy = mutual_information(X_train, Y_train)
-    i_xt, i_ty = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn.epochs)
+    i_xt, i_ty = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
 
-    plot_information_plane(i_xt, i_ty, mn.epochs, i_xy)
+    plot_information_plane(i_xt, i_ty, mn['epochs'], i_xy)

@@ -5,9 +5,9 @@ from keras.api.layers import Dense, Input
 # Modelo Tishiby
 #   - MLP;
 #   - Atv tanh, atv saida sigmoid
-#   - Perda: cross_entropy
+#   - Perda: binary_crossentropy
 #   - Unidades: 12 - 10 - 8 - 6 - 4 - 2
-#   - Dataset
+#   - Dataset sintetico
 
 def model(input_shape: tuple) -> Sequential:
 
@@ -40,3 +40,6 @@ def model(input_shape: tuple) -> Sequential:
     )
 
     return model
+
+if __name__ == '__main__':
+    print('model.py é um módulo e não deve ser executado diretamente')
