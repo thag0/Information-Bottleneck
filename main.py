@@ -1,10 +1,9 @@
-from mi_utils import *
-from data import *
-from magic_numbers import magic_numbers as mn
-from model import model
-from ip_plot import plot_information_plane
+from modules.mi_utils import *
+from modules.data import *
+from modules.magic_numbers import magic_numbers as mn
+from modules.model import model
+from modules.ip_plot import plot_information_plane
 
-import keras
 from keras.api.callbacks import LambdaCallback
 from keras.api.models import Sequential
 import tensorflow as tf
