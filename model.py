@@ -17,8 +17,8 @@ def model(input_shape: tuple) -> Sequential:
         Dense( 7, activation = "tanh"),
         Dense( 5, activation = "tanh"),
         Dense( 4, activation = "tanh"),
-        Dense( 3, activation = "tanh"),
-        Dense( 2, activation = "tanh"),
+        # Dense( 3, activation = "tanh"),
+        # Dense( 2, activation = "tanh"),
         Dense( 1, activation = "sigmoid"),
     ])
 
@@ -34,7 +34,7 @@ def model(input_shape: tuple) -> Sequential:
 
     model.compile(
         # optimizer = SGD(0.00001, 0.9999),
-        optimizer = SGD(0.0001, 0.99),
+        optimizer = SGD(0.0001, 0.96),
         loss = "binary_crossentropy",
         metrics = ['accuracy']
     )
