@@ -1,6 +1,6 @@
 magic_numbers = {
-    'epochs': 300,
-    'tam_teste': 0.15,
+    'epochs': 120,
+    'tam_teste': 0.5,
     'tam_lote': 64,
     'num_bins': 30,
     'flat_mnist_input': True,

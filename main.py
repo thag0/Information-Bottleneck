@@ -35,8 +35,8 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
     
-    # input_shape, X_train, X_test, Y_train, Y_test = gen_data(mn['flat_mnist_input'], mn.flat_input, mn.normalize_dataset_out)
-    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    input_shape, X_train, X_test, Y_train, Y_test = gen_data(mn['tam_teste'], mn['flat_mnist_input'])
+    # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)

@@ -32,10 +32,23 @@ def model(input_shape: tuple[int]) -> Sequential:
     #     Dense( 1, activation = "sigmoid"),
     # ])
 
+    model =  Sequential([
+        Input(input_shape),
+        Dense(25, activation = "tanh"),
+        Dense(20, activation = "tanh"),
+        Dense(15, activation = "tanh"),
+        Dense(10, activation = "softmax"),
+    ])
+
+    # model.compile(
+    #     optimizer = SGD(0.00001, 0.9999),
+    #     loss = "binary_crossentropy",
+    #     metrics = ['accuracy']
+    # )
+
     model.compile(
-        # optimizer = SGD(0.00001, 0.9999),
-        optimizer = SGD(0.0001, 0.96),
-        loss = "binary_crossentropy",
+        optimizer = SGD(0.000001, 0.999),
+        loss = "categorical_crossentropy",
         metrics = ['accuracy']
     )
 
