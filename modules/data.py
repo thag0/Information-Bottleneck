@@ -17,11 +17,10 @@ def gen_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tupl
     else:
         input_shape = X_train[0]
 
-    y_train = to_categorical(y_train, num_classes=10)
-    y_test = to_categorical(y_test, num_classes=10)
+    y_train = to_categorical(y_train, num_classes = 10)
+    y_test = to_categorical(y_test, num_classes = 10)
 
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size = tam_teste, random_state = 42)
-
 
     return (input_shape, X_train, X_test, y_train, y_test)
 
