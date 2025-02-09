@@ -9,6 +9,7 @@ from keras.api.models import Sequential
 import tensorflow as tf
 import os
 import sys
+import gc
 
 # desativar avisos
 import warnings
@@ -42,12 +43,13 @@ if __name__ == '__main__':
     input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
     # MNIST Conv
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
+    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
 
-    modelo = mnist_conv_model(input_shape)
+    # modelo = mnist_conv_model(input_shape)
+    modelo = mnist_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
         save_activations(modelo),

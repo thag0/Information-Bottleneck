@@ -26,6 +26,8 @@ def mutual_information(y: np.ndarray, x: np.ndarray) -> float:
     return entropy(y) - conditional_entropy(y, x)
 
 def discretization(act_list: list[list], num_bins = 30) -> list[list]:
+    print('Discretizando ativações')
+    
     discretized = []
 
     for epoch_acts in act_list:
