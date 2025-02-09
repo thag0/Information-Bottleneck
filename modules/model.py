@@ -1,6 +1,6 @@
 from keras.api.models import Sequential
 from keras.api.optimizers import SGD
-from keras.api.layers import Dense, Input
+from keras.api.layers import Dense, Input, Conv2D, MaxPooling2D, Flatten
 
 
 def tishby_model(input_shape: tuple[int]) -> Sequential:
@@ -47,8 +47,30 @@ def mnist_model(input_shape: tuple[int]) -> Sequential:
     
     model =  Sequential([
         Input(input_shape),
-        Dense(10, activation = "tanh"),
-        Dense(10, activation = "tanh"),
+        Dense(8, activation = "tanh"),
+        Dense(8, activation = "tanh"),
+        Dense(8, activation = "tanh"),
+        Dense(10, activation = "softmax"),
+    ])
+
+    model.compile(
+        optimizer = SGD(0.000001, 0.999),
+        loss = "categorical_crossentropy",
+        metrics = ['accuracy']
+    )
+
+    return model
+
+def mnist_conv_model(input_shape: tuple[int]) -> Sequential:
+    # Muito pesado em memória mesmo sendo um modelo pequeno
+
+    model =  Sequential([
+        Input(input_shape),
+        Conv2D(10, (3, 3), activation = 'relu'),
+        MaxPooling2D((2, 2)),
+        Conv2D(10, (3, 3), activation = 'relu'),
+        MaxPooling2D((2, 2)),
+        Flatten(),
         Dense(10, activation = "tanh"),
         Dense(10, activation = "softmax"),
     ])

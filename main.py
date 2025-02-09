@@ -1,7 +1,7 @@
 from modules.mi_utils import *
 from modules.data import *
 from modules.magic_numbers import magic_numbers as mn
-from modules.model import mnist_model, tishby_model
+from modules.model import mnist_model, tishby_model, mnist_conv_model
 from modules.ip_plot import plot_information_plane
 
 from keras.api.callbacks import LambdaCallback
@@ -35,13 +35,19 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
     
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    # Tishby
     # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    
+    # MNIST
+    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    
+    # MNIST Conv
+    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
 
-    modelo = mnist_model(input_shape)
+    modelo = mnist_conv_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
         save_activations(modelo),

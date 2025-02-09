@@ -19,7 +19,7 @@ def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tu
         X_test = X_test.reshape(X_test.shape[0], -1)
         input_shape = (X_train.shape[1], )
     else:
-        input_shape = X_train[0]
+        input_shape = (28, 28, 1)
 
     y_train = to_categorical(y_train, num_classes = 10)
     y_test = to_categorical(y_test, num_classes = 10)
