@@ -3,7 +3,11 @@ from sklearn.model_selection import train_test_split
 from keras.api.datasets import mnist
 from keras.api.utils import to_categorical
 
-def gen_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """
+        Carrega a base de dados MNIST de dígitos manuscritos de 0 a 9.
+    """
+
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
     if normalize:
@@ -25,9 +29,10 @@ def gen_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tupl
     return (input_shape, X_train, X_test, y_train, y_test)
 
 def generate_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
-    '''
+    """
         Dataset do artigo de Tishby
-    '''
+    """
+    
     np.random.seed(42)
     X = np.random.choice([0, 1], size = (samples, input_len))
 
