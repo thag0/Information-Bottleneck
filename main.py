@@ -49,7 +49,8 @@ if __name__ == '__main__':
     print('Y: ', Y_train.shape)
 
     # modelo = mnist_conv_model(input_shape)
-    modelo = mnist_model(input_shape)
+    # modelo = mnist_model(input_shape)
+    modelo = tishby_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
         save_activations(modelo),
