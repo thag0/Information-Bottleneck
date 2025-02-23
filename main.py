@@ -37,10 +37,10 @@ if __name__ == '__main__':
     os.system('cls')
     
     # Tishby
-    # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
     
     # MNIST
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
     # MNIST Conv
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
