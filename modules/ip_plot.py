@@ -2,16 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-def get_unique_filename(base_name: str, extension: str = ".png"):
-    i = 0
-
-    filename = f"{base_name}-{i}{extension}"
-    while os.path.exists(filename):
-        i += 1
-        filename = f"{base_name}-{i}{extension}"
-    
-    return filename
-
 def plot_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epochs: int):
     print('Gerando gráfico')
 
@@ -115,8 +105,33 @@ def save_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epoc
     plt.title("Information Plane")
     plt.legend()
 
-    filename = get_unique_filename(filename)
     plt.savefig(filename)
+
+def save_train_info(train_info: dict, epochs: int, fl_base: str):
+    print('Salvando dados de treino')
+
+    loss_filename = fl_base + '-loss'
+    acc_filename = fl_base + '-accuracy'
+
+    plt.clf()
+    plt.close('all')
+
+    plt.plot(train_info['loss'], label = 'Perda')
+    plt.title('Perda')
+    plt.xlabel('Época')
+    plt.ylabel('Perda')
+    plt.legend()
+    plt.savefig(loss_filename)
+    
+    plt.clf()
+    plt.close('all')
+
+    plt.plot(train_info['accuracy'], label = 'Acurácia')
+    plt.title('Acurácia')
+    plt.xlabel('Época')
+    plt.ylabel('Acurácia')
+    plt.legend()
+    plt.savefig(acc_filename)
 
 if __name__ == '__main__':
     print('ip_plot.py é um modulo e não deve ser executado diretamente.')
