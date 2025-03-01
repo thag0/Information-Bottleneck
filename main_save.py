@@ -66,12 +66,16 @@ if __name__ == '__main__':
     print('Y: ', Y_train.shape)
 
     for iteration in range(iterations):
+        os.system('cls')
+        print(f'Iteração {iteration + 1}/{iterations}')
+        
         iteration_dir = create_unique_dir(dir_base)
 
         dir_ip = os.path.join(iteration_dir, "ip")
         dir_train = os.path.join(iteration_dir, "train")
 
         act_list.clear() # limpar cache
+        gc.collect()
 
         # Modelo
         modelo = tishby_model(input_shape)
