@@ -10,6 +10,7 @@ import tensorflow as tf
 import os
 import sys
 import gc
+import json
 
 # desativar avisos
 import warnings
@@ -31,7 +32,9 @@ def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarr
     normalized_arr = (arr - arr_min) / (arr_max - arr_min) * (max_val - min_val) + min_val
     return normalized_arr
 
-act_list = [] # [epoch][layer][sample][neuron]
+def save_mn_config(mn: dict, filename: str):
+    with open(filename + '.json', "w") as f:
+        json.dump(mn, f, indent = 4)
 
 def create_unique_dir(base_dir):
     if os.path.exists(base_dir):
@@ -47,6 +50,8 @@ def create_unique_dir(base_dir):
     
     return new_dir
 
+act_list = [] # [epoch][layer][sample][neuron]
+
 if __name__ == '__main__':
     os.system('cls')
 
@@ -54,7 +59,7 @@ if __name__ == '__main__':
     # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     # dir_base = "./results/new/mnist/784-8-8-8-10"
 
-    iterations = 1
+    iterations = 30
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
@@ -109,8 +114,10 @@ if __name__ == '__main__':
         iteration_dir = create_unique_dir(dir_base)
         dir_ip = os.path.join(iteration_dir, "info-plane")
         dir_train = os.path.join(iteration_dir, "train")
-        dir_config = os.path.join(iteration_dir, "model-config")
+        dir_model_config = os.path.join(iteration_dir, "model-config")
+        dir_mn_config = os.path.join(iteration_dir, "magic-numbers")
 
         save_information_plane(I_XT, I_TY, I_XY, mn['epochs'], dir_ip)
         save_train_info(result.history, mn['epochs'], dir_train)
-        save_model_config(modelo, dir_config)
+        save_model_config(modelo, dir_model_config)
+        save_mn_config(mn, dir_mn_config)

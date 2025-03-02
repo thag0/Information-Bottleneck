@@ -38,7 +38,7 @@ def model_config(model: Sequential) -> dict:
 def save_model_config(model: Sequential, filename: str):
     config = model_config(model)
     
-    with open(filename, "w") as f:
+    with open(filename + '.json', "w") as f:
         json.dump(config, f, indent = 4)
 
 def tishby_model(input_shape: tuple[int]) -> Sequential:
