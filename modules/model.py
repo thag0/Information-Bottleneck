@@ -1,7 +1,45 @@
 from keras.api.models import Sequential
 from keras.api.optimizers import SGD
 from keras.api.layers import Dense, Input, Conv2D, MaxPooling2D, Flatten
+import json
 
+def model_config(model: Sequential) -> dict:
+    config = {}
+
+    for i in range(len(model.layers)):
+        layer = model.layers[i]
+        key = 'layer ' + str(i) + " - " + layer.__class__.__name__
+
+        if (isinstance(layer, Dense)):
+            config[key] = {
+                'units': layer.units,
+                'activation': layer.activation.__name__
+            }
+            
+        elif (isinstance(layer, Conv2D)):
+            config[key] = {
+                'filters': layer.filters,
+                'kernel_size': layer.kernel_size,
+                'activation': layer.activation.__name__
+            }
+
+        elif (isinstance(layer, MaxPooling2D)):
+            config[key] = {
+                'pool_size': layer.pool_size,
+                'strides': layer.strides,
+                'padding': layer.padding
+            }
+
+        elif (isinstance(layer, Flatten)):
+            config[key] = {}
+
+    return config
+
+def save_model_config(model: Sequential, filename: str):
+    config = model_config(model)
+    
+    with open(filename, "w") as f:
+        json.dump(config, f, indent = 4)
 
 def tishby_model(input_shape: tuple[int]) -> Sequential:
     """
@@ -14,26 +52,26 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
     #   - Unidades: 12 - 10 - 8 - 6 - 4 - 2
     #   - Dataset sintetico
 
-    # model =  Sequential([
-    #     Input(input_shape),
-    #     Dense(10, activation = "tanh"),
-    #     Dense( 7, activation = "tanh"),
-    #     Dense( 5, activation = "tanh"),
-    #     Dense( 4, activation = "tanh"),
-    #     Dense( 3, activation = "tanh"),
-    #     Dense( 2, activation = "tanh"),
-    #     Dense( 1, activation = "sigmoid"),
-    # ])
-
     model =  Sequential([
         Input(input_shape),
         Dense(10, activation = "tanh"),
-        Dense( 8, activation = "tanh"),
-        Dense( 6, activation = "tanh"),
+        Dense( 7, activation = "tanh"),
+        Dense( 5, activation = "tanh"),
         Dense( 4, activation = "tanh"),
+        Dense( 3, activation = "tanh"),
         Dense( 2, activation = "tanh"),
         Dense( 1, activation = "sigmoid"),
     ])
+
+    # model =  Sequential([
+    #     Input(input_shape),
+    #     Dense(10, activation = "tanh"),
+    #     Dense( 8, activation = "tanh"),
+    #     Dense( 6, activation = "tanh"),
+    #     Dense( 4, activation = "tanh"),
+    #     Dense( 2, activation = "tanh"),
+    #     Dense( 1, activation = "sigmoid"),
+    # ])
 
     model.compile(
         optimizer = SGD(0.001, 0.5),

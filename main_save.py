@@ -1,7 +1,7 @@
+from modules.magic_numbers import magic_numbers as mn
 from modules.mi_utils import *
 from modules.data import *
-from modules.magic_numbers import magic_numbers as mn
-from modules.model import mnist_model, tishby_model, mnist_conv_model
+from modules.model import *
 from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
 
 from keras.api.callbacks import LambdaCallback
@@ -50,9 +50,11 @@ def create_unique_dir(base_dir):
 if __name__ == '__main__':
     os.system('cls')
 
-    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
-    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
-    iterations = 30
+    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    # dir_base = "./results/new/mnist/784-8-8-8-10"
+
+    iterations = 1
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
@@ -67,11 +69,13 @@ if __name__ == '__main__':
     print('Y: ', Y_train.shape)
 
     for iteration in range(iterations):
-        act_list.clear() # limpar cache
+        # limpar cache
+        act_list.clear()
         gc.collect()
 
         # Modelo
         modelo = tishby_model(input_shape)
+        # modelo = mnist_model(input_shape)
 
         act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
             save_activations(modelo),
@@ -103,8 +107,10 @@ if __name__ == '__main__':
         I_XT, I_TY = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
 
         iteration_dir = create_unique_dir(dir_base)
-        dir_ip = os.path.join(iteration_dir, "ip")
+        dir_ip = os.path.join(iteration_dir, "info-plane")
         dir_train = os.path.join(iteration_dir, "train")
+        dir_config = os.path.join(iteration_dir, "model-config")
 
         save_information_plane(I_XT, I_TY, I_XY, mn['epochs'], dir_ip)
         save_train_info(result.history, mn['epochs'], dir_train)
+        save_model_config(modelo, dir_config)
