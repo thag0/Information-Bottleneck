@@ -50,8 +50,10 @@ def create_unique_dir(base_dir):
 if __name__ == '__main__':
     os.system('cls')
 
+    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
     dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
-    iterations = 20
+    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    iterations = 30
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
@@ -66,14 +68,6 @@ if __name__ == '__main__':
     print('Y: ', Y_train.shape)
 
     for iteration in range(iterations):
-        os.system('cls')
-        print(f'Iteração {iteration + 1}/{iterations}')
-        
-        iteration_dir = create_unique_dir(dir_base)
-
-        dir_ip = os.path.join(iteration_dir, "ip")
-        dir_train = os.path.join(iteration_dir, "train")
-
         act_list.clear() # limpar cache
         gc.collect()
 
@@ -87,6 +81,9 @@ if __name__ == '__main__':
             sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),
             sys.stdout.flush()
         ])
+
+        os.system('cls')
+        print(f'Iteração {iteration + 1}/{iterations}')
 
         print('Treinando')
         result = modelo.fit(
@@ -105,6 +102,10 @@ if __name__ == '__main__':
 
         I_XY = mutual_information(X_train, Y_train)
         I_XT, I_TY = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
+
+        iteration_dir = create_unique_dir(dir_base)
+        dir_ip = os.path.join(iteration_dir, "ip")
+        dir_train = os.path.join(iteration_dir, "train")
 
         save_information_plane(I_XT, I_TY, I_XY, mn['epochs'], dir_ip)
         save_train_info(result.history, mn['epochs'], dir_train)
