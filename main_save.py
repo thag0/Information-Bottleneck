@@ -55,11 +55,11 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
 
-    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
-    # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
 
-    iterations = 30
+    iterations = 10
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
