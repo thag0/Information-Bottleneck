@@ -55,11 +55,11 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
 
-    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
-    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
 
-    iterations = 10
+    iterations = 30
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
@@ -67,7 +67,7 @@ if __name__ == '__main__':
     # MNIST
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
-    # MNIST Conv
+    # MNIST Conv (pesado, necessario +16GB de RAM)
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
     print('X: ', X_train.shape)

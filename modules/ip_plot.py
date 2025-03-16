@@ -113,24 +113,25 @@ def save_train_info(train_info: dict, epochs: int, fl_base: str):
     loss_filename = fl_base + '-loss'
     acc_filename = fl_base + '-accuracy'
 
+    last_loss = train_info['loss'][-1]
+    last_acc = train_info['accuracy'][-1]
+
     plt.clf()
     plt.close('all')
 
-    plt.plot(train_info['loss'], label = 'Perda')
-    plt.title('Perda')
-    plt.xlabel('Época')
-    plt.ylabel('Perda')
-    plt.legend()
+    plt.plot(train_info['loss'], label = 'Loss')
+    plt.title(f'Loss ({last_loss:.8f})')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
     plt.savefig(loss_filename)
-    
+
     plt.clf()
     plt.close('all')
 
-    plt.plot(train_info['accuracy'], label = 'Acurácia')
-    plt.title('Acurácia')
-    plt.xlabel('Época')
-    plt.ylabel('Acurácia')
-    plt.legend()
+    plt.plot(train_info['accuracy'], label = 'Accuracy')
+    plt.title(f'Accuracy ({last_acc:.4f})')
+    plt.xlabel('Epoch')
+    plt.ylabel('Accuracy')
     plt.savefig(acc_filename)
 
 if __name__ == '__main__':
