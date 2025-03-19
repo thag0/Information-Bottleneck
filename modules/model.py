@@ -88,6 +88,7 @@ def mnist_model(input_shape: tuple[int]) -> Sequential:
         Dense(8, activation = "tanh"),
         Dense(8, activation = "tanh"),
         Dense(8, activation = "tanh"),
+        Dense(8, activation = "tanh"),
         Dense(10, activation = "softmax"),
     ])
 
