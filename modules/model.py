@@ -83,8 +83,19 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
 
 def mnist_model(input_shape: tuple[int]) -> Sequential:
     
+    # model =  Sequential([
+    #     Input(input_shape),
+    #     Dense(8, activation = "tanh"),
+    #     Dense(8, activation = "tanh"),
+    #     Dense(8, activation = "tanh"),
+    #     Dense(8, activation = "tanh"),
+    #     Dense(10, activation = "softmax"),
+    # ])
+
     model =  Sequential([
         Input(input_shape),
+        Dense(8, activation = "tanh"),
+        Dense(8, activation = "tanh"),
         Dense(8, activation = "tanh"),
         Dense(8, activation = "tanh"),
         Dense(8, activation = "tanh"),
