@@ -46,6 +46,9 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
         Modelo baseado no artigo de Tishby.
     """
 
+    act_inner = "relu"
+    act_out = "sigmoid"
+
     #   - MLP;
     #   - Atv tanh, atv saida sigmoid
     #   - Perda: binary_crossentropy
@@ -54,23 +57,23 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
 
     # model =  Sequential([
     #     Input(input_shape),
-    #     Dense(10, activation = "tanh"),
-    #     Dense( 7, activation = "tanh"),
-    #     Dense( 5, activation = "tanh"),
-    #     Dense( 4, activation = "tanh"),
-    #     Dense( 3, activation = "tanh"),
-    #     Dense( 2, activation = "tanh"),
-    #     Dense( 1, activation = "sigmoid"),
+    #     Dense(10, activation = "act_inner"),
+    #     Dense( 7, activation = "act_inner"),
+    #     Dense( 5, activation = "act_inner"),
+    #     Dense( 4, activation = "act_inner"),
+    #     Dense( 3, activation = "act_inner"),
+    #     Dense( 2, activation = "act_inner"),
+    #     Dense( 1, activation = "act_out"),
     # ])
 
     model =  Sequential([
         Input(input_shape),
-        Dense(10, activation = "tanh"),
-        Dense( 8, activation = "tanh"),
-        Dense( 6, activation = "tanh"),
-        Dense( 4, activation = "tanh"),
-        Dense( 2, activation = "tanh"),
-        Dense( 1, activation = "sigmoid"),
+        Dense(10, activation = act_inner),
+        Dense( 8, activation = act_inner),
+        Dense( 6, activation = act_inner),
+        Dense( 4, activation = act_inner),
+        Dense( 2, activation = act_inner),
+        Dense( 1, activation = act_out),
     ])
 
     model.compile(

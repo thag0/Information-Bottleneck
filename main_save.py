@@ -56,18 +56,19 @@ if __name__ == '__main__':
     os.system('cls')
 
     # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1 (relu)/"
     # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-10/"
-    dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
+    # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
 
-    iterations = 3
+    iterations = 5
 
     # Tishby
-    # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
     
     # MNIST
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
     # MNIST Conv (pesado, necessario +16GB de RAM)
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
@@ -81,8 +82,8 @@ if __name__ == '__main__':
         gc.collect()
 
         # Modelo
-        # modelo = tishby_model(input_shape)
-        modelo = mnist_model(input_shape)
+        modelo = tishby_model(input_shape)
+        # modelo = mnist_model(input_shape)
 
         act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
             save_activations(modelo),
