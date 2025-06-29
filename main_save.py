@@ -62,7 +62,7 @@ if __name__ == '__main__':
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
 
-    iterations = 5
+    iterations = 25
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
