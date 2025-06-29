@@ -61,7 +61,7 @@ if __name__ == '__main__':
 
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
-    # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
+    dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
 
     iterations = 2
 
