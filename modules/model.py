@@ -124,11 +124,11 @@ def mnist_conv_model(input_shape: tuple[int]) -> Sequential:
     model =  Sequential([
         Input(input_shape),
         Conv2D(8, (3, 3), activation = 'relu'),
-        MaxPooling2D((2, 2)),
+        MaxPooling2D((3, 3)),
         Conv2D(8, (3, 3), activation = 'relu'),
-        MaxPooling2D((2, 2)),
+        MaxPooling2D((3, 3)),
         Flatten(),
-        Dense(10, activation = "tanh"),
+        Dense(20, activation = "tanh"),
         Dense(10, activation = "softmax"),
     ])
 

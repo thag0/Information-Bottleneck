@@ -24,6 +24,14 @@ def save_activations(model: Sequential):
     act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
 
     activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
+
+    # Garantir que seja uma lista
+    if not isinstance(activations, list):
+        activations = [activations]
+
+    # Conversão pra economizar memoria
+    activations = [a.astype(np.float16) for a in activations]
+
     act_list.append(activations)
 
 def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarray:
@@ -61,18 +69,20 @@ if __name__ == '__main__':
 
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
-    dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
+    # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
 
-    iterations = 2
+    dir_base = "./results/new/mnist-conv/"
+
+    iterations = 3
 
     # Tishby
     # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
     
     # MNIST
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
     # MNIST Conv (pesado, necessario +16GB de RAM)
-    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
+    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
@@ -84,7 +94,8 @@ if __name__ == '__main__':
 
         # Modelo
         # modelo = tishby_model(input_shape)
-        modelo = mnist_model(input_shape)
+        # modelo = mnist_model(input_shape)
+        modelo = mnist_conv_model(input_shape)
 
         act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
             save_activations(modelo),

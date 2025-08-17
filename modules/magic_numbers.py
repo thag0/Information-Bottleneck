@@ -1,7 +1,7 @@
 magic_numbers = {
-    'epochs': 150,
-    'tam_teste': 0.3,
-    'tam_lote': 64,
+    'epochs': 50,
+    'tam_teste': 0.4,
+    'tam_lote': 128,
     'num_bins': 30,
     'flat_mnist_input': True,
     'normalize_dataset_out': False,
