@@ -1,0 +1,61 @@
+{
+    "layer 0 - Conv2D": {
+        "filters": 8,
+        "kernel_size": [
+            3,
+            3
+        ],
+        "activation": "relu"
+    },
+    "layer 1 - MaxPooling2D": {
+        "pool_size": [
+            3,
+            3
+        ],
+        "strides": [
+            3,
+            3
+        ],
+        "padding": "valid"
+    },
+    "layer 2 - Conv2D": {
+        "filters": 8,
+        "kernel_size": [
+            3,
+            3
+        ],
+        "activation": "relu"
+    },
+    "layer 3 - MaxPooling2D": {
+        "pool_size": [
+            2,
+            2
+        ],
+        "strides": [
+            2,
+            2
+        ],
+        "padding": "valid"
+    },
+    "layer 4 - Flatten": {},
+    "layer 5 - Dense": {
+        "units": 40,
+        "activation": "tanh"
+    },
+    "layer 6 - Dense": {
+        "units": 20,
+        "activation": "tanh"
+    },
+    "layer 7 - Dense": {
+        "units": 20,
+        "activation": "tanh"
+    },
+    "layer 8 - Dense": {
+        "units": 20,
+        "activation": "tanh"
+    },
+    "layer 9 - Dense": {
+        "units": 10,
+        "activation": "softmax"
+    }
+}

@@ -1,9 +1,0 @@
-{
-    "epochs": 30,
-    "tam_teste": 0.4,
-    "tam_lote": 128,
-    "num_bins": 30,
-    "flat_mnist_input": true,
-    "normalize_dataset_out": false,
-    "tishby_dataset_len": 4096
-}
