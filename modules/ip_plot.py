@@ -70,28 +70,20 @@ def save_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epoc
     cmap = plt.get_cmap('gnuplot')
     colors = [cmap(i) for i in np.linspace(0, 1, epochs)]
 
-    # Conectar camadas 
+    # Linhas entre camadas 
     for epoch in range(epochs):
         for layer in range(num_layers - 1):
             plt.plot(
                 [i_xt[layer, epoch], i_xt[layer + 1, epoch]],  
                 [i_ty[layer, epoch], i_ty[layer + 1, epoch]],  
-                color = colors[epoch], linestyle = '-', linewidth = 0.8, alpha = 0.5
+                color = colors[epoch], linestyle = '-', linewidth = 0.7, alpha = 0.5
             )
 
+    # Desenhar pontos
     for i in range(num_layers):
         IXT = i_xt[i, :]
         ITY = i_ty[i, :]
-
         plt.scatter(IXT, ITY, marker = 'o', c = colors, s = 100, alpha = 1)
-
-        # Conectar épocas
-        for epoch in range(epochs - 1):
-            plt.plot(
-                [IXT[epoch], IXT[epoch + 1]],
-                [ITY[epoch], ITY[epoch + 1]],
-                color = colors[epoch], linestyle = '-', linewidth = 0.8, alpha = 0.5
-            )
 
     sm = plt.cm.ScalarMappable(cmap = cmap, norm = plt.Normalize(vmin = 0, vmax = 1))
     fig, ax = plt.gcf(), plt.gca()

@@ -46,7 +46,7 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
         Modelo baseado no artigo de Tishby.
     """
 
-    act_inner = "relu"
+    act_inner = "tanh"
     act_out = "sigmoid"
 
     #   - MLP;
@@ -55,29 +55,29 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
     #   - Unidades: 12 - 10 - 8 - 6 - 4 - 2
     #   - Dataset sintetico
 
-    # model =  Sequential([
-    #     Input(input_shape),
-    #     Dense(10, activation = "act_inner"),
-    #     Dense( 7, activation = "act_inner"),
-    #     Dense( 5, activation = "act_inner"),
-    #     Dense( 4, activation = "act_inner"),
-    #     Dense( 3, activation = "act_inner"),
-    #     Dense( 2, activation = "act_inner"),
-    #     Dense( 1, activation = "act_out"),
-    # ])
-
     model =  Sequential([
         Input(input_shape),
         Dense(10, activation = act_inner),
-        Dense( 8, activation = act_inner),
-        Dense( 6, activation = act_inner),
+        Dense( 7, activation = act_inner),
+        Dense( 5, activation = act_inner),
         Dense( 4, activation = act_inner),
+        Dense( 3, activation = act_inner),
         Dense( 2, activation = act_inner),
         Dense( 1, activation = act_out),
     ])
 
+    # model =  Sequential([
+    #     Input(input_shape),
+    #     Dense(10, activation = act_inner),
+    #     Dense( 8, activation = act_inner),
+    #     Dense( 6, activation = act_inner),
+    #     Dense( 4, activation = act_inner),
+    #     Dense( 2, activation = act_inner),
+    #     Dense( 1, activation = act_out),
+    # ])
+
     model.compile(
-        optimizer = SGD(0.001, 0.5),
+        optimizer = SGD(0.0001, 0.9),
         loss = "binary_crossentropy",
         metrics = ['accuracy']
     )
@@ -86,17 +86,8 @@ def tishby_model(input_shape: tuple[int]) -> Sequential:
 
 def mnist_model(input_shape: tuple[int]) -> Sequential:
     
-    act_inner = "relu"
+    act_inner = "tanh"
     act_out = "softmax"
-
-    # model =  Sequential([
-    #     Input(input_shape),
-    #     Dense(8, activation = "act_inner"),
-    #     Dense(8, activation = "act_inner"),
-    #     Dense(8, activation = "act_inner"),
-    #     Dense(8, activation = "act_inner"),
-    #     Dense(10, activation = "act_out"),
-    # ])
 
     model =  Sequential([
         Input(input_shape),
@@ -104,11 +95,20 @@ def mnist_model(input_shape: tuple[int]) -> Sequential:
         Dense(8, activation = act_inner),
         Dense(8, activation = act_inner),
         Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
         Dense(10, activation = act_out),
     ])
+
+    # model =  Sequential([
+    #     Input(input_shape),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(8, activation = act_inner),
+    #     Dense(10, activation = act_out),
+    # ])
 
     model.compile(
         optimizer = SGD(0.00001, 0.995),

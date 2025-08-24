@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
+from joblib import Parallel, delayed
 
 def entropy(y: np.ndarray) -> float:
     unique, count = np.unique(y, return_counts=True, axis=0)
@@ -42,7 +43,7 @@ def discretization(act_list: list[list], num_bins = 30) -> list[list]:
     
     return discretized
 
-def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int, logs: bool = True) -> tuple[np.ndarray, np.ndarray]:
+def information_plane(x: np.ndarray, y: np.ndarray, act_list: list, num_layers: int, epochs: int, logs: bool = True, n_jobs: int = -1) -> tuple[np.ndarray, np.ndarray]:
     if logs: print("\nCalculando plano da informação")
 
     i_xt = np.zeros((num_layers, epochs))

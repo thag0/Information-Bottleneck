@@ -48,10 +48,9 @@ if __name__ == '__main__':
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
 
-
+    modelo = tishby_model(input_shape)
     # modelo = mnist_conv_model(input_shape)
     # modelo = mnist_model(input_shape)
-    modelo = tishby_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
         save_activations(modelo),
@@ -74,9 +73,9 @@ if __name__ == '__main__':
     loss, acc = modelo.evaluate(X_train, Y_train, verbose = 0)
     print('\n \nPerda: ', loss, '\nAcurácia: ', acc)
 
-    act_list_2 = discretization(act_list, mn['num_bins'])
+    act_list = discretization(act_list, mn['num_bins'])
 
     I_XY = mutual_information(X_train, Y_train)
-    I_XT, I_TY = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
+    I_XT, I_TY = information_plane(X_train, Y_train, act_list, len(modelo.layers), mn['epochs'])
 
     plot_information_plane(I_XT, I_TY, I_XY, mn['epochs'])

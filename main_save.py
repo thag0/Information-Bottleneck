@@ -18,6 +18,10 @@ warnings.filterwarnings("ignore", category = UserWarning)
 tf.get_logger().setLevel('ERROR')
 
 def save_activations(model: Sequential):
+    """
+        Captura as ativações do modelo 
+    """
+
     global act_list
     
     outputs = [layer.output for layer in model.layers]
@@ -25,26 +29,24 @@ def save_activations(model: Sequential):
 
     activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
 
-    # Garantir que seja uma lista
-    if not isinstance(activations, list):
-        activations = [activations]
-
     # Conversão pra economizar memoria
-    activations = [a.astype(np.float16) for a in activations]
+    activations = [a.astype("float16") for a in activations]
 
     act_list.append(activations)
 
-def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarray:
-    arr_min = np.min(arr)
-    arr_max = np.max(arr)
-    normalized_arr = (arr - arr_min) / (arr_max - arr_min) * (max_val - min_val) + min_val
-    return normalized_arr
-
 def save_mn_config(mn: dict, filename: str):
+    """
+        Salva os valores do Maagic Numbers em arquivo JSON.
+    """
+    
     with open(filename + '.json', "w") as f:
         json.dump(mn, f, indent = 4)
 
 def create_unique_dir(base_dir):
+    """
+        Cria novos diretórios para salvar os resultados.
+    """
+
     if os.path.exists(base_dir):
         i = 1
         while os.path.exists(f"{base_dir}{i}"):
@@ -63,7 +65,7 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
 
-    # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
     # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1 (relu)/"
 
@@ -71,18 +73,18 @@ if __name__ == '__main__':
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
 
-    dir_base = "./results/new/mnist-conv/"
+    # dir_base = "./results/new/mnist-conv/"
 
-    iterations = 3
+    iterations = 1
 
     # Tishby
-    # input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
     
     # MNIST
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
-    # MNIST Conv (pesado, necessario +16GB de RAM)
-    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
+    # MNIST Conv (pesado, necessario +32GB de RAM)
+    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
@@ -93,9 +95,9 @@ if __name__ == '__main__':
         gc.collect()
 
         # Modelo
-        # modelo = tishby_model(input_shape)
+        modelo = tishby_model(input_shape)
         # modelo = mnist_model(input_shape)
-        modelo = mnist_conv_model(input_shape)
+        # modelo = mnist_conv_model(input_shape)
 
         act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
             save_activations(modelo),
@@ -121,10 +123,10 @@ if __name__ == '__main__':
         loss, acc = modelo.evaluate(X_train, Y_train, verbose = 0)
         print('\n \nPerda: ', loss, '\nAcurácia: ', acc)
 
-        act_list_2 = discretization(act_list, mn['num_bins'])
+        act_list = discretization(act_list, mn['num_bins'])
 
         I_XY = mutual_information(X_train, Y_train)
-        I_XT, I_TY = information_plane(X_train, Y_train, act_list_2, len(modelo.layers), mn['epochs'])
+        I_XT, I_TY = information_plane(X_train, Y_train, act_list, len(modelo.layers), mn['epochs'])
 
         iteration_dir = create_unique_dir(dir_base)
         dir_ip = os.path.join(iteration_dir, "info-plane")
