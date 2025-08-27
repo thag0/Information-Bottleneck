@@ -6,8 +6,6 @@ from modules.model import *
 from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
 
 from keras.api.callbacks import LambdaCallback
-from keras.api.models import Sequential
-import tensorflow as tf
 import os
 import sys
 import gc
@@ -15,23 +13,6 @@ import gc
 # desativar avisos
 import warnings
 warnings.filterwarnings("ignore", category = UserWarning)
-
-# def save_activations(model: Sequential):
-#     """
-#         Captura as ativações do modelo 
-#     """
-
-#     global act_list
-    
-#     outputs = [layer.output for layer in model.layers]
-#     act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
-
-#     activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
-
-#     # Conversão pra economizar memoria
-#     activations = [a.astype("float16") for a in activations]
-
-#     act_list.append(activations)
 
 def create_unique_dir(base_dir):
     """
@@ -51,10 +32,10 @@ def create_unique_dir(base_dir):
     
     return new_dir
 
-act_list = [] # [epoch][layer][sample][neuron]
-
 if __name__ == '__main__':
     os.system('cls')
+
+    act_list = [] # [epoch][layer][sample][neuron]
 
     # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
     dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"

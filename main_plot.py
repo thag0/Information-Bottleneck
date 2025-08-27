@@ -6,25 +6,17 @@ from modules.model import save_activations
 from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
 
 from keras.api.callbacks import LambdaCallback
-from keras.api.models import Sequential
 import os
 import sys
-import gc
 
 # desativar avisos
 import warnings
 warnings.filterwarnings("ignore", category = UserWarning)
 
-def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarray:
-    arr_min = np.min(arr)
-    arr_max = np.max(arr)
-    normalized_arr = (arr - arr_min) / (arr_max - arr_min) * (max_val - min_val) + min_val
-    return normalized_arr
-
-act_list = [] # [epoch][layer][sample][neuron]
-
 if __name__ == '__main__':
     os.system('cls')
+
+    act_list = [] # [epoch][layer][sample][neuron]
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
