@@ -1,3 +1,5 @@
+import json
+
 magic_numbers = {
     'epochs': 200,
     'tam_teste': 0.3,
@@ -7,6 +9,14 @@ magic_numbers = {
     'normalize_dataset_out': False,
     'tishby_dataset_len': 1024 * 4
 }
+
+def save_mn_config(mn: dict, filename: str):
+    """
+        Salva os valores do Maagic Numbers em arquivo JSON.
+    """
+    
+    with open(filename + '.json', "w") as f:
+        json.dump(mn, f, indent = 4)
 
 if __name__ == '__main__':
     print('magic_numbers.py é um módulo e não deve ser executado diretamente')

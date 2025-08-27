@@ -1,4 +1,5 @@
 from modules.magic_numbers import magic_numbers as mn
+from modules.magic_numbers import save_mn_config
 from modules.mi_utils import *
 from modules.data import *
 from modules.model import *
@@ -10,7 +11,6 @@ import tensorflow as tf
 import os
 import sys
 import gc
-import json
 
 # desativar avisos
 import warnings
@@ -33,14 +33,6 @@ def save_activations(model: Sequential):
     activations = [a.astype("float16") for a in activations]
 
     act_list.append(activations)
-
-def save_mn_config(mn: dict, filename: str):
-    """
-        Salva os valores do Maagic Numbers em arquivo JSON.
-    """
-    
-    with open(filename + '.json', "w") as f:
-        json.dump(mn, f, indent = 4)
 
 def create_unique_dir(base_dir):
     """
