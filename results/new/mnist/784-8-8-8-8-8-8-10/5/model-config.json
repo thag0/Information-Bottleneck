@@ -1,0 +1,26 @@
+{
+    "layer 0 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 1 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 2 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 3 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 4 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 5 - Dense": {
+        "units": 10,
+        "activation": "softmax"
+    }
+}
