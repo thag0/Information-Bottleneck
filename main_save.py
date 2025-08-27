@@ -135,6 +135,6 @@ if __name__ == '__main__':
         dir_mn_config = os.path.join(iteration_dir, "magic-numbers")
 
         save_information_plane(I_XT, I_TY, I_XY, mn['epochs'], dir_ip)
-        save_train_info(result.history, mn['epochs'], dir_train)
+        save_train_info(result.history, dir_train)
         save_model_config(modelo, dir_model_config)
         save_mn_config(mn, dir_mn_config)
