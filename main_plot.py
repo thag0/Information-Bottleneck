@@ -5,6 +5,8 @@ from modules.model import mnist_model, tishby_model, mnist_conv_model
 from modules.model import save_activations
 from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
 
+from keras.api.models import Sequential
+
 from keras.api.callbacks import LambdaCallback
 import os
 import sys
@@ -13,11 +15,7 @@ import sys
 import warnings
 warnings.filterwarnings("ignore", category = UserWarning)
 
-if __name__ == '__main__':
-    os.system('cls')
-
-    act_list = [] # [epoch][layer][sample][neuron]
-
+def get_data() -> tuple[tuple[int], np.ndarray, np.ndarray]:
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
     
@@ -27,12 +25,26 @@ if __name__ == '__main__':
     # MNIST Conv
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
 
+    return input_shape, X_train, Y_train
+
+def get_model(input_shape: tuple[int]) -> Sequential:
+    model = tishby_model(input_shape)
+    # model = mnist_model(input_shape)
+    # model = mnist_conv_model(input_shape) # pesado, necessario +16GB de RAM
+
+    return model
+
+if __name__ == '__main__':
+    os.system('cls')
+
+    act_list = [] # [epoch][layer][sample][neuron]
+
+    input_shape, X_train, Y_train = get_data()
+
     print('X: ', X_train.shape)
     print('Y: ', Y_train.shape)
 
-    modelo = tishby_model(input_shape)
-    # modelo = mnist_conv_model(input_shape)
-    # modelo = mnist_model(input_shape)
+    modelo = get_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
         save_activations(modelo, act_list, X_train, mn['tam_lote']),
