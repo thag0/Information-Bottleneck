@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
     "layer 0 - Dense": {
         "units": 8,
@@ -23,4 +24,31 @@
         "units": 10,
         "activation": "softmax"
     }
+=======
+{
+    "layer 0 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 1 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 2 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 3 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 4 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 5 - Dense": {
+        "units": 10,
+        "activation": "softmax"
+    }
+>>>>>>> 64e5fe56bd17c4781e7e68ce05c6c4d25fee473f
 }
