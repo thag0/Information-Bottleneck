@@ -2,11 +2,11 @@ from modules.mi_utils import *
 from modules.data import *
 from modules.magic_numbers import magic_numbers as mn
 from modules.model import mnist_model, tishby_model, mnist_conv_model
+from modules.model import save_activations
 from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
 
 from keras.api.callbacks import LambdaCallback
 from keras.api.models import Sequential
-import tensorflow as tf
 import os
 import sys
 import gc
@@ -14,16 +14,6 @@ import gc
 # desativar avisos
 import warnings
 warnings.filterwarnings("ignore", category = UserWarning)
-tf.get_logger().setLevel('ERROR')
-
-def save_activations(model: Sequential):
-    global act_list
-    
-    outputs = [layer.output for layer in model.layers]
-    act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
-
-    activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
-    act_list.append(activations)
 
 def normalize_array(arr: np.ndarray, min_val: float, max_val: float) -> np.ndarray:
     arr_min = np.min(arr)
@@ -53,7 +43,7 @@ if __name__ == '__main__':
     # modelo = mnist_model(input_shape)
 
     act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
-        save_activations(modelo),
+        save_activations(modelo, act_list, X_train, mn['tam_lote']),
     
         # Imprimir avanço do treinamento
         sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),

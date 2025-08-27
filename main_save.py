@@ -15,24 +15,23 @@ import gc
 # desativar avisos
 import warnings
 warnings.filterwarnings("ignore", category = UserWarning)
-tf.get_logger().setLevel('ERROR')
 
-def save_activations(model: Sequential):
-    """
-        Captura as ativações do modelo 
-    """
+# def save_activations(model: Sequential):
+#     """
+#         Captura as ativações do modelo 
+#     """
 
-    global act_list
+#     global act_list
     
-    outputs = [layer.output for layer in model.layers]
-    act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
+#     outputs = [layer.output for layer in model.layers]
+#     act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
 
-    activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
+#     activations = act_model.predict(X_train, batch_size = mn['tam_lote'], verbose = 0)
 
-    # Conversão pra economizar memoria
-    activations = [a.astype("float16") for a in activations]
+#     # Conversão pra economizar memoria
+#     activations = [a.astype("float16") for a in activations]
 
-    act_list.append(activations)
+#     act_list.append(activations)
 
 def create_unique_dir(base_dir):
     """
@@ -57,8 +56,8 @@ act_list = [] # [epoch][layer][sample][neuron]
 if __name__ == '__main__':
     os.system('cls')
 
-    dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
-    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
+    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
     # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1 (relu)/"
 
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
@@ -67,7 +66,7 @@ if __name__ == '__main__':
 
     # dir_base = "./results/new/mnist-conv/"
 
-    iterations = 1
+    iterations = 2
 
     # Tishby
     input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
@@ -92,7 +91,7 @@ if __name__ == '__main__':
         # modelo = mnist_conv_model(input_shape)
 
         act_callback = LambdaCallback(on_epoch_end = lambda epoch, logs: [
-            save_activations(modelo),
+            save_activations(modelo, act_list, X_train, mn['tam_lote']),
 
             # Imprimir avanço do treinamento
             sys.stdout.write(f"\rÉpoca {epoch + 1}/{mn['epochs']}"),

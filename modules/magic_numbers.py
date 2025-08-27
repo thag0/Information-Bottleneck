@@ -3,7 +3,7 @@ import json
 magic_numbers = {
     'epochs': 200,
     'tam_teste': 0.3,
-    'tam_lote': 32,
+    'tam_lote': 64,
     'num_bins': 30,
     'flat_mnist_input': True,
     'normalize_dataset_out': False,

@@ -2,6 +2,10 @@ from keras.api.models import Sequential
 from keras.api.optimizers import SGD
 from keras.api.layers import Dense, Input, Conv2D, MaxPooling2D, Flatten
 import json
+import numpy as np
+
+import tensorflow as tf
+tf.get_logger().setLevel('ERROR')
 
 def model_config(model: Sequential) -> dict:
     config = {}
@@ -40,6 +44,21 @@ def save_model_config(model: Sequential, filename: str):
     
     with open(filename + '.json', "w") as f:
         json.dump(config, f, indent = 4)
+
+def save_activations(model: Sequential, act_list: list, X_train: np.ndarray, tam_lote: int):
+    """
+        Captura as ativações do modelo 
+    """
+    
+    outputs = [layer.output for layer in model.layers]
+    act_model = tf.keras.Model(inputs = model.inputs, outputs = outputs)
+
+    activations = act_model.predict(X_train, batch_size = tam_lote, verbose = 0)
+
+    # Conversão pra economizar memoria
+    activations = [a.astype("float16") for a in activations]
+
+    act_list.append(activations)
 
 def tishby_model(input_shape: tuple[int]) -> Sequential:
     """
