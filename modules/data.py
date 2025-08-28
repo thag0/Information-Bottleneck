@@ -28,7 +28,7 @@ def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tu
 
     return (input_shape, X_train, X_test, y_train, y_test)
 
-def generate_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
+def tishby_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
     """
         Dataset do artigo de Tishby
     """

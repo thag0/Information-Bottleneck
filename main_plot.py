@@ -17,7 +17,7 @@ warnings.filterwarnings("ignore", category = UserWarning)
 
 def get_data() -> tuple[tuple[int], np.ndarray, np.ndarray]:
     # Tishby
-    input_shape, X_train, Y_train = generate_data(12, mn['tishby_dataset_len'])
+    input_shape, X_train, Y_train = tishby_data(12, mn['tishby_dataset_len'])
     
     # MNIST
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
