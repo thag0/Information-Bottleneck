@@ -108,9 +108,13 @@ def main():
 
         act_list = discretization(act_list, mn['num_bins'])
 
-        I_XY = mutual_information(X_train, Y_train) # Informação mútua da entrada com a saída do dataset
-        I_XT, I_TY = information_plane(X_train, Y_train, act_list, len(model.layers), mn['epochs']) # Informação mútua da entrada/saída com as ativações
+        # Informação mútua da entrada com a saída do dataset
+        I_XY = mutual_information(X_train, Y_train)
+        
+        # Informação mútua da entrada/saída com as ativações
+        I_XT, I_TY = information_plane(X_train, Y_train, act_list, len(model.layers), mn['epochs'])
 
+        # Salvar resultados
         iteration_dir = create_unique_dir(dir_base)
         dir_ip = os.path.join(iteration_dir, "info-plane")
         dir_train = os.path.join(iteration_dir, "train")

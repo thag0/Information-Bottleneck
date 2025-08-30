@@ -3,7 +3,7 @@ from modules.data import *
 from modules.magic_numbers import magic_numbers as mn
 from modules.model import mnist_model, tishby_model, mnist_conv_model
 from modules.model import save_activations
-from modules.ip_plot import plot_information_plane, save_information_plane, save_train_info
+from modules.ip_plot import plot_information_plane
 
 from keras.api.models import Sequential
 
