@@ -1,17 +1,20 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
-from joblib import Parallel, delayed
 
 def entropy(y: np.ndarray) -> float:
-    unique, count = np.unique(y, return_counts=True, axis=0)
+    """
+        Calcula a Entropia de Shannon.
+    """
+    
+    _, count = np.unique(y, return_counts=True, axis=0)
     prob = count / len(y)
-    en = np.sum((-1)*prob*np.log2(prob))
+    e = np.sum((-1)*prob*np.log2(prob))
 
-    return en
+    return e
 
 def joint_entropy(y: np.ndarray, x: np.ndarray) -> float:
-    if x.shape[0] != y.shape[0]:
+    if x.shape[0] != y.shape[0]: # Nivelar a quantidade de amostras pro conjunto menor
         min_size = min(x.shape[0], y.shape[0])
         x = x[:min_size]
         y = y[:min_size]

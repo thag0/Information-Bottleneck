@@ -38,7 +38,7 @@ def _draw_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epo
             plt.plot(
                 [i_xt[layer, epoch], i_xt[layer + 1, epoch]],
                 [i_ty[layer, epoch], i_ty[layer + 1, epoch]],
-                color=colors[epoch], linestyle='-', linewidth=0.8, alpha=0.5
+                color=colors[epoch], linestyle='-', linewidth=0.8, alpha=0.5, zorder=1
             )
 
     # Linhas verticais entre épocas (por camada)
@@ -49,7 +49,7 @@ def _draw_information_plane(i_xt: np.ndarray, i_ty: np.ndarray, i_xy: float, epo
             plt.plot(
                 [IXT[epoch], IXT[epoch + 1]],
                 [ITY[epoch], ITY[epoch + 1]],
-                color=colors[epoch], linestyle='-', linewidth=0.8, alpha=0.5
+                color=colors[epoch], linestyle='-', linewidth=0.8, alpha=0.5, zorder=2
             )
 
     # Pontos de cada época

@@ -1,6 +1,6 @@
 import json
 
-magic_numbers = {
+magic_numbers = {# hiperparâmetros
     'epochs': 200,
     'tam_teste': 0.3,
     'tam_lote': 64,
@@ -12,7 +12,7 @@ magic_numbers = {
 
 def save_mn_config(mn: dict, filename: str):
     """
-        Salva os valores do Maagic Numbers em arquivo JSON.
+        Salva os valores do Magic Numbers em arquivo JSON.
     """
     
     with open(filename + '.json', "w") as f:

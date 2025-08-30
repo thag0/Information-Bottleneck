@@ -63,6 +63,8 @@ def save_activations(model: Sequential, act_list: list, X_train: np.ndarray, tam
 def tishby_model(input_shape: tuple[int]) -> Sequential:
     """
         Modelo baseado no artigo de Tishby.
+
+        ref: https://arxiv.org/abs/1703.00810
     """
 
     act_inner = "tanh"

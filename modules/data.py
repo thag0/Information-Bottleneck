@@ -3,14 +3,14 @@ from sklearn.model_selection import train_test_split
 from keras.api.datasets import mnist
 from keras.api.utils import to_categorical
 
-def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+def mnist_data(tam_teste: float, flat_input: bool, norm_input: bool = True) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
         Carrega a base de dados MNIST de dígitos manuscritos de 0 a 9.
     """
 
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
 
-    if normalize:
+    if norm_input:
         X_train = X_train.astype('float32') / 255.0
         X_test = X_test.astype('float32') / 255.0
 
@@ -22,7 +22,7 @@ def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tu
         input_shape = (28, 28, 1)
 
     y_train = to_categorical(y_train, num_classes = 10)
-    y_test = to_categorical(y_test, num_classes = 10)
+    y_test  = to_categorical(y_test,  num_classes = 10)
 
     X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size = tam_teste, random_state = 42)
 
@@ -31,6 +31,8 @@ def mnist_data(tam_teste: float, flat_input: bool, normalize: bool = True) -> tu
 def tishby_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
     """
         Dataset do artigo de Tishby
+
+        ref: https://arxiv.org/abs/1703.00810
     """
     
     np.random.seed(42)
