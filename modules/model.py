@@ -1,6 +1,7 @@
 from keras.api.models import Sequential
 from keras.api.optimizers import SGD
 from keras.api.layers import Dense, Input, Conv2D, MaxPooling2D, Flatten
+from keras.api.models import Model
 import json
 import numpy as np
 
@@ -59,6 +60,21 @@ def save_activations(model: Sequential, act_list: list, X_train: np.ndarray, tam
     activations = [a.astype("float16") for a in activations]
 
     act_list.append(activations)
+
+def calc_num_activations(model: Sequential) -> int:
+    """
+        Retorna o número total de ativações do modelo.
+    """
+
+    aux_model = Model(inputs=model.inputs, outputs=[l.output for l in model.layers])
+    test_input = np.zeros((1,) + model.input_shape[1:])
+    outputs = aux_model.predict(test_input, verbose=0)
+
+    acts = 0
+    for layer, out in zip(model.layers, outputs):
+        acts += np.prod(out.shape)
+        
+    return acts
 
 def tishby_model(input_shape: tuple[int]) -> Sequential:
     """
