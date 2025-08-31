@@ -20,6 +20,10 @@
         "activation": "tanh"
     },
     "layer 5 - Dense": {
+        "units": 8,
+        "activation": "tanh"
+    },
+    "layer 6 - Dense": {
         "units": 10,
         "activation": "softmax"
     }
