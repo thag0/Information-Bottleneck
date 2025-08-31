@@ -35,12 +35,12 @@ def create_unique_dir(base_dir):
 def get_save_dir() -> str:
     # Tishby
     # dir_base = "./results/new/tishby/12-10-8-6-4-2-1/"
-    dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
+    # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1/"
     # dir_base = "./results/new/tishby/12-10-7-5-4-3-2-1 (relu)/"
 
     # MNIST
     # dir_base = "./results/new/mnist/784-8-8-8-10/"
-    # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
+    dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10/"
     # dir_base = "./results/new/mnist/784-8-8-8-8-8-8-10 (relu)/"
 
     # MNIST Conv
@@ -50,10 +50,10 @@ def get_save_dir() -> str:
 
 def get_data() -> tuple[tuple[int], np.ndarray, np.ndarray]:
     # Tishby
-    input_shape, X_train, Y_train = tishby_data(12, mn['tishby_dataset_len'])
+    # input_shape, X_train, Y_train = tishby_data(12, mn['tishby_dataset_len'])
     
     # MNIST
-    # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
+    input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], mn['flat_mnist_input'])
     
     # MNIST Conv
     # input_shape, X_train, X_test, Y_train, Y_test = mnist_data(mn['tam_teste'], False)
@@ -61,8 +61,8 @@ def get_data() -> tuple[tuple[int], np.ndarray, np.ndarray]:
     return input_shape, X_train, Y_train
 
 def get_model(input_shape: tuple[int]) -> Sequential:
-    model = tishby_model(input_shape)
-    # model = mnist_model(input_shape)
+    # model = tishby_model(input_shape)
+    model = mnist_model(input_shape)
     # model = mnist_conv_model(input_shape) # pesado, necessario +16GB de RAM
 
     return model
@@ -70,7 +70,7 @@ def get_model(input_shape: tuple[int]) -> Sequential:
 def main():
     act_list = [] # [epoch][layer][sample][neuron]
 
-    iterations = 2
+    iterations = 10
     
     dir_base = get_save_dir()
     input_shape, X_train, Y_train = get_data()

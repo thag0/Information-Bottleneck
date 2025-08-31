@@ -1,7 +1,7 @@
 import json
 
 magic_numbers = {# hiperparâmetros
-    'epochs': 200,
+    'epochs': 150,
     'tam_teste': 0.3,
     'tam_lote': 64,
     'num_bins': 30,

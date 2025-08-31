@@ -110,26 +110,25 @@ def mnist_model(input_shape: tuple[int]) -> Sequential:
     act_inner = "tanh"
     act_out = "softmax"
 
-    model =  Sequential([
-        Input(input_shape),
-        Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
-        Dense(8, activation = act_inner),
-        Dense(10, activation = act_out),
-    ])
-
     # model =  Sequential([
     #     Input(input_shape),
     #     Dense(8, activation = act_inner),
     #     Dense(8, activation = act_inner),
     #     Dense(8, activation = act_inner),
     #     Dense(8, activation = act_inner),
-    #     Dense(8, activation = act_inner),
-    #     Dense(8, activation = act_inner),
-    #     Dense(8, activation = act_inner),
     #     Dense(10, activation = act_out),
     # ])
+
+    model =  Sequential([
+        Input(input_shape),
+        Dense(8, activation = act_inner),
+        Dense(8, activation = act_inner),
+        Dense(8, activation = act_inner),
+        Dense(8, activation = act_inner),
+        Dense(8, activation = act_inner),
+        Dense(8, activation = act_inner),
+        Dense(10, activation = act_out),
+    ])
 
     model.compile(
         optimizer = SGD(0.00001, 0.995),
@@ -147,8 +146,11 @@ def mnist_conv_model(input_shape: tuple[int]) -> Sequential:
         Conv2D(8, (3, 3), activation = 'relu'),
         MaxPooling2D((3, 3)),
         Conv2D(8, (3, 3), activation = 'relu'),
-        MaxPooling2D((3, 3)),
+        MaxPooling2D((2, 2)),
         Flatten(),
+        Dense(40, activation = "tanh"),
+        Dense(20, activation = "tanh"),
+        Dense(20, activation = "tanh"),
         Dense(20, activation = "tanh"),
         Dense(10, activation = "softmax"),
     ])
