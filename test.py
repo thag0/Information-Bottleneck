@@ -19,7 +19,7 @@ def tishby_data(input_len=12, samples=4096):
     input_shape = (input_len,)
     return input_shape, X.astype(np.float32), Y.astype(np.float32), f_x, theta
 
-def generate_graphics():
+def plot_tishby_dataset():
     input_shape, X, Y, f_x, theta = tishby_data()
 
     # Cria figura com 2 colunas
@@ -61,7 +61,6 @@ def generate_graphics():
     axes[1].set_title("Distribuição das somas")
     axes[1].legend()
 
-    # fig.suptitle("Dataset de Tishby", fontsize=16)
     plt.tight_layout()
     plt.show()
 
@@ -116,13 +115,10 @@ def plot_tanh_vs_relu():
 
     plt.show()
 
-def main():
-    # input_shape, X_train, _, Y_train, _ = mnist_data(0.3, flat_input=False)
-    # plot_mnist_samples(X_train, Y_train, 5, 10)
-
-    plot_tanh_vs_relu()
-
 if __name__ == '__main__':
     os.system('cls')
-    main()
-
+    
+    input_shape, X_train, _, Y_train, _ = mnist_data(0.3, flat_input=False)
+    plot_mnist_samples(X_train, Y_train, n_rows=5, n_cols=10)
+    
+    # plot_tanh_vs_relu()

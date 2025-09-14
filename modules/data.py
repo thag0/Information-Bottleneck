@@ -28,7 +28,7 @@ def mnist_data(tam_teste: float, flat_input: bool, norm_input: bool = True) -> t
 
     return (input_shape, X_train, X_test, y_train, y_test)
 
-def tishby_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray, np.ndarray]:
+def tishby_data(input_len = 12) -> tuple[tuple[int], np.ndarray, np.ndarray]:
     """
         Dataset do artigo de Tishby
 
@@ -36,10 +36,12 @@ def tishby_data(input_len = 12, samples = 4096) -> tuple[tuple[int], np.ndarray,
     """
     
     np.random.seed(42)
+    samples = 2 ** input_len
+
     X = np.random.choice([0, 1], size = (samples, input_len))
 
     f_x = np.sum(X, axis = 1)
-    theta = np.median(f_x)
+    theta = np.median(f_x) # limiar de separação
 
     gamma = 10
     P_Y_given_X = 1 / (1 + np.exp(-gamma * (f_x - theta)))

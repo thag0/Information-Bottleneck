@@ -2,32 +2,32 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
-def entropy(y: np.ndarray) -> float:
+def entropy(x: np.ndarray) -> float:
     """
         Calcula a Entropia de Shannon.
     """
     
-    _, count = np.unique(y, return_counts=True, axis=0)
-    prob = count / len(y)
+    _, count = np.unique(x, return_counts=True, axis=0)
+    prob = count / len(x)
     e = np.sum((-1)*prob*np.log2(prob))
 
     return e
 
-def joint_entropy(y: np.ndarray, x: np.ndarray) -> float:
-    if x.shape[0] != y.shape[0]: # Nivelar a quantidade de amostras pro conjunto menor
-        min_size = min(x.shape[0], y.shape[0])
-        x = x[:min_size]
+def joint_entropy(x: np.ndarray, y: np.ndarray) -> float:
+    if y.shape[0] != x.shape[0]: # Nivelar a quantidade de amostras pro conjunto menor
+        min_size = min(y.shape[0], x.shape[0])
         y = y[:min_size]
+        x = x[:min_size]
 
-    yx = np.c_[y, x]
+    xy = np.c_[x, y]
 
-    return entropy(yx)
+    return entropy(xy)
 
-def conditional_entropy(y: np.ndarray, x: np.ndarray) -> float:
-    return joint_entropy(y, x) - entropy(x)
+def conditional_entropy(x: np.ndarray, y: np.ndarray) -> float:
+    return joint_entropy(x, y) - entropy(y)
 
-def mutual_information(y: np.ndarray, x: np.ndarray) -> float:
-    return entropy(y) - conditional_entropy(y, x)
+def mutual_information(x: np.ndarray, y: np.ndarray) -> float:
+    return entropy(x) - conditional_entropy(x, y)
 
 def discretization(act_list: list[list], num_bins = 30) -> list[list]:
     print('Discretizando ativações')
