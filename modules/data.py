@@ -3,6 +3,10 @@ from sklearn.model_selection import train_test_split
 from keras.api.datasets import mnist
 from keras.api.utils import to_categorical
 
+# ideias
+# -fashion mnist
+# -cifar10
+
 def mnist_data(tam_teste: float, flat_input: bool, norm_input: bool = True) -> tuple[tuple[int], np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """
         Carrega a base de dados MNIST de dígitos manuscritos de 0 a 9.
